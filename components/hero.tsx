@@ -116,7 +116,7 @@ export function Hero({ revealed = true }: { revealed?: boolean }) {
             className="eyebrow-line eyebrow animate-fade-up"
             style={{ animationDelay: "0.1s" }}
           >
-            <span>Zavod za ohranjanje kulturne dediščine</span>
+            <span>Zavod za ohranjanje kulturne dediščine recro</span>
           </div>
 
           <h1
@@ -336,9 +336,6 @@ function StaticServiceLinks() {
               <Icon className={`mi ${label.anim} h-3.5 w-3.5 text-[#d49960]`} />
             </div>
             <div>
-              <p className="font-mono text-[10px] tracking-[0.25em] text-[#d49960]/75">
-                / {label.code}
-              </p>
               <p className="text-xs font-semibold tracking-wider text-[#e8dcc4]">
                 {label.title}
               </p>
@@ -462,9 +459,6 @@ function FloatingLabel({
         <Icon className={`mi ${label.anim} h-3.5 w-3.5 text-[#d49960]`} />
       </div>
       <div>
-        <p className="font-mono text-[10px] tracking-[0.25em] text-[#d49960]/75">
-          / {label.code}
-        </p>
         <p
           className={`text-xs font-semibold tracking-wider transition-colors ${
             hovered ? "text-[#f4ead4]" : "text-[#e8dcc4]"

@@ -45,7 +45,7 @@ export function Footer() {
               se ukvarja z varovanjem, obnovo in promocijo kulturne dediščine.
             </p>
             <p className="mt-6 font-mono text-[10px] tracking-[0.35em] text-[#d49960]/55">
-              HERITAGE · SCIENCE · DIGITAL
+              KULTURNA DEDIŠČINA · ZNANOST · DIGITALIZACIJA
             </p>
           </div>
 

@@ -81,7 +81,7 @@ export function Features() {
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
         <div className="mx-auto max-w-2xl text-center">
           <span className="eyebrow eyebrow-line">
-            <span>/ 02 · Storitve</span>
+            <span>Storitve</span>
           </span>
           <h2 className="mt-6 font-serif text-balance text-4xl font-medium tracking-tight text-ivory-gradient sm:text-5xl lg:text-6xl">
             Celovita skrb za{" "}
@@ -95,7 +95,7 @@ export function Features() {
         </div>
 
         <div className="mx-auto mt-20 grid max-w-6xl gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {services.map((service, idx) => (
+          {services.map((service) => (
             <Link
               key={service.title}
               href={`/storitve/${service.slug}`}
@@ -110,13 +110,8 @@ export function Features() {
                 }}
               />
 
-              <div className="flex items-start justify-between">
-                <div className="flex h-14 w-14 items-center justify-center rounded-lg border border-[#d49960]/30 bg-[#d49960]/10 text-[#d49960] transition-all duration-500 group-hover:border-[#d49960]/70 group-hover:bg-[#d49960]/20 group-hover:text-[#f4ead4]">
-                  <service.icon className={`mi ${service.anim} h-6 w-6`} />
-                </div>
-                <span className="font-mono text-[10px] tracking-[0.32em] text-[#d49960]/55">
-                  / 0{idx + 1}
-                </span>
+              <div className="flex h-14 w-14 items-center justify-center rounded-lg border border-[#d49960]/30 bg-[#d49960]/10 text-[#d49960] transition-all duration-500 group-hover:border-[#d49960]/70 group-hover:bg-[#d49960]/20 group-hover:text-[#f4ead4]">
+                <service.icon className={`mi ${service.anim} h-6 w-6`} />
               </div>
 
               <h3 className="mt-7 font-serif text-xl font-medium leading-snug text-[#e8dcc4] transition-colors group-hover:text-[#f4ead4]">

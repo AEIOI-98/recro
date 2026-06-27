@@ -53,7 +53,7 @@ export function About() {
         {/* Heading */}
         <div className="mx-auto max-w-3xl text-center">
           <span className="eyebrow eyebrow-line">
-            <span>/ 01 · O nas</span>
+            <span>O nas</span>
           </span>
           <h2 className="mt-6 font-serif text-balance text-4xl font-medium tracking-tight text-ivory-gradient sm:text-5xl lg:text-6xl">
             Zavod{" "}
@@ -84,15 +84,12 @@ export function About() {
           </div>
 
           <div className="grid gap-px overflow-hidden rounded-2xl border border-[#d49960]/15 bg-[#d49960]/10 sm:grid-cols-2 lg:grid-cols-4">
-            {goals.map((goal, idx) => (
+            {goals.map((goal) => (
               <article
                 key={goal.title}
                 className="brackets icon-fx group relative bg-[#0c1d1a] p-7 transition-all duration-500 hover:bg-[#132823]"
               >
-                <span className="font-mono text-[10px] tracking-[0.3em] text-[#d49960]/55">
-                  / 0{idx + 1}
-                </span>
-                <div className="mt-4 flex h-12 w-12 items-center justify-center rounded-lg border border-[#d49960]/30 bg-[#d49960]/10 text-[#d49960] transition-all duration-500 group-hover:border-[#d49960]/70 group-hover:bg-[#d49960]/20">
+                <div className="flex h-12 w-12 items-center justify-center rounded-lg border border-[#d49960]/30 bg-[#d49960]/10 text-[#d49960] transition-all duration-500 group-hover:border-[#d49960]/70 group-hover:bg-[#d49960]/20">
                   <goal.icon className={`mi ${goal.anim} h-5 w-5`} />
                 </div>
                 <h4 className="mt-6 font-serif text-lg font-medium text-[#e8dcc4]">
@@ -118,7 +115,7 @@ export function About() {
           />
 
           <div className="mx-auto max-w-3xl text-center">
-            <span className="eyebrow">/ Poslanstvo</span>
+            <span className="eyebrow">Poslanstvo</span>
             <h3 className="mt-5 font-serif text-3xl font-medium text-ivory-gradient sm:text-4xl">
               Poslanstvo in vizija
             </h3>

@@ -116,16 +116,13 @@ export function Header() {
             <div className="mt-10 flow-root">
               <div className="-my-6 divide-y divide-[#d49960]/15">
                 <div className="space-y-1 py-6">
-                  {navLinks.map((link, i) => (
+                  {navLinks.map((link) => (
                     <Link
                       key={link.name}
                       href={link.href}
                       className="group -mx-3 flex items-center gap-3 rounded-lg px-3 py-3 text-base font-medium text-[#e8dcc4] hover:bg-[#d49960]/10"
                       onClick={() => setMobileMenuOpen(false)}
                     >
-                      <span className="font-mono text-xs text-[#d49960]/60">
-                        / 0{i + 1}
-                      </span>
                       <span className="tracking-wider">{link.name}</span>
                     </Link>
                   ))}

@@ -147,7 +147,7 @@ export default async function ServicePage({ params }: { params: Promise<{ slug: 
             >
               <ArrowLeft className="mi mi-nudge-left h-3.5 w-3.5" /> Nazaj na storitve
             </Link>
-            <span className="mt-10 inline-block eyebrow">/ Storitev</span>
+            <span className="mt-10 inline-block eyebrow">Storitev</span>
             <h1 className="mt-4 font-serif text-4xl font-medium tracking-tight text-ivory-gradient sm:text-5xl lg:text-6xl">
               {service.title}
             </h1>
@@ -162,7 +162,7 @@ export default async function ServicePage({ params }: { params: Promise<{ slug: 
           <div className="mx-auto max-w-7xl px-6 lg:px-8">
             <div className="grid gap-16 lg:grid-cols-2">
               <div>
-                <span className="eyebrow">/ Pregled</span>
+                <span className="eyebrow">Pregled</span>
                 <h2 className="mt-3 font-serif text-3xl font-medium text-ivory-gradient">
                   O storitvi
                 </h2>
@@ -178,19 +178,16 @@ export default async function ServicePage({ params }: { params: Promise<{ slug: 
                 </div>
               </div>
               <div>
-                <span className="eyebrow">/ Obseg</span>
+                <span className="eyebrow">Obseg</span>
                 <h2 className="mt-3 font-serif text-3xl font-medium text-ivory-gradient">
                   Kaj ponujamo
                 </h2>
                 <ul className="mt-8 space-y-3">
-                  {service.features.map((feature, idx) => (
+                  {service.features.map((feature) => (
                     <li
                       key={feature}
                       className="brackets icon-fx group flex items-start gap-4 rounded-lg border border-[#d49960]/15 bg-[#0c1d1a]/60 p-4 transition-colors hover:border-[#d49960]/45"
                     >
-                      <span className="font-mono text-[10px] tracking-[0.25em] text-[#d49960]/70">
-                        {String(idx + 1).padStart(2, "0")}
-                      </span>
                       <CheckCircle className="mi mi-pop mt-0.5 h-4 w-4 shrink-0 text-[#d49960]" />
                       <span className="text-sm text-[#e8dcc4]/80">{feature}</span>
                     </li>
@@ -202,7 +199,7 @@ export default async function ServicePage({ params }: { params: Promise<{ slug: 
             {/* CTA */}
             <div className="brackets relative mt-20 overflow-hidden rounded-2xl border border-[#d49960]/20 glass-panel p-10 text-center sm:p-14">
               <div className="absolute inset-0 -z-10 tech-grid opacity-25" />
-              <span className="eyebrow">/ Sodelovanje</span>
+              <span className="eyebrow">Sodelovanje</span>
               <h3 className="mt-3 font-serif text-3xl font-medium text-ivory-gradient">
                 Zainteresirani za to storitev?
               </h3>

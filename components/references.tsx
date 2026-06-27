@@ -177,7 +177,7 @@ export function References() {
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
         <div className="mx-auto max-w-2xl text-center">
           <span className="eyebrow eyebrow-line">
-            <span>/ 03 · Reference</span>
+            <span>Reference</span>
           </span>
           <h2 className="mt-6 font-serif text-balance text-4xl font-medium tracking-tight text-ivory-gradient sm:text-5xl lg:text-6xl">
             Naši{" "}
@@ -227,7 +227,7 @@ export function References() {
         {/* Grid View */}
         {viewMode === "grid" && (
           <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {references.map((ref, idx) => (
+            {references.map((ref) => (
               <Link key={ref.slug} href={`/reference/${ref.slug}`}>
                 <article className="brackets icon-fx group overflow-hidden rounded-xl border border-[#d49960]/15 bg-[#0c1d1a]/60 backdrop-blur-sm transition-all duration-500 hover:-translate-y-1 hover:border-[#d49960]/45">
                   <div className="relative aspect-[4/3] overflow-hidden bg-[#0a1816]">
@@ -236,9 +236,6 @@ export function References() {
                       className="absolute inset-0 bg-cover bg-center opacity-70 transition-all duration-700 group-hover:scale-110 group-hover:opacity-90"
                       style={{ backgroundImage: `url(${asset(ref.image)})` }}
                     />
-                    <div className="absolute left-3 top-3 z-20 rounded-md border border-[#d49960]/40 bg-[#0c1d1a]/80 px-2 py-1 font-mono text-[10px] tracking-[0.25em] text-[#d49960] backdrop-blur-sm">
-                      / 0{idx + 1}
-                    </div>
                     <StatusBadge
                       status={ref.status}
                       className="absolute right-3 top-3 z-20"

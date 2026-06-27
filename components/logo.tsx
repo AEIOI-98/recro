@@ -1,5 +1,7 @@
 "use client";
 
+import { useEffect, useRef } from "react";
+
 export function RecroLogoIcon({
   className = "",
   size = 40,
@@ -78,6 +80,44 @@ export function AnimatedRecroLogo({
 }) {
   const height = size * 1.41;
   const isIntro = variant === "intro";
+  const drawGroupRef = useRef<SVGGElement>(null);
+
+  // Intro draw-on: measure each path's real length and animate stroke-dashoffset
+  // with a per-element stagger. Using measured lengths (instead of pathLength=1)
+  // keeps the draw reliable on mobile browsers, and the cheap CSS transition
+  // (with no drop-shadow filter) keeps it smooth.
+  useEffect(() => {
+    if (!isIntro) return;
+    const g = drawGroupRef.current;
+    if (!g) return;
+    const els = Array.from(
+      g.querySelectorAll<SVGGeometryElement>("path, polygon")
+    );
+    const lengths = els.map((el) => {
+      try {
+        return el.getTotalLength();
+      } catch {
+        return 0;
+      }
+    });
+    // Set each stroke to "fully hidden" (dash = length, offset = length).
+    els.forEach((el, i) => {
+      const len = lengths[i] || 0;
+      el.style.transition = "none";
+      el.style.strokeDasharray = `${len}`;
+      el.style.strokeDashoffset = `${len}`;
+    });
+    // Next frame: transition the offset to 0 to "draw" each line in sequence.
+    const raf = requestAnimationFrame(() => {
+      els.forEach((el, i) => {
+        el.style.transition = `stroke-dashoffset 1.15s cubic-bezier(0.22, 1, 0.36, 1) ${
+          drawDelayMs + i * 150
+        }ms`;
+        el.style.strokeDashoffset = "0";
+      });
+    });
+    return () => cancelAnimationFrame(raf);
+  }, [isIntro, drawDelayMs]);
   // The logo viewBox is 21M × 29.7M, but the static RecroLogoIcon sizes its
   // rendered box to size × size*1.41. So the SVG drawable area exactly fills
   // the wrapper. Below corner positions are expressed as % of that wrapper.
@@ -132,8 +172,9 @@ export function AnimatedRecroLogo({
         <div
           className="absolute inset-0 flex items-center justify-center"
           style={{
-            filter:
-              "drop-shadow(0 0 14px rgba(212,153,96,0.65)) drop-shadow(0 0 28px rgba(212,153,96,0.3))",
+            // Single small-blur glow — cheap enough to keep smooth while the
+            // strokes animate (the heavy double drop-shadow was the mobile lag).
+            filter: "drop-shadow(0 0 7px rgba(212,153,96,0.55))",
           }}
         >
           <svg
@@ -145,35 +186,27 @@ export function AnimatedRecroLogo({
             style={{ shapeRendering: "geometricPrecision" }}
           >
             <g
+              ref={drawGroupRef}
               stroke="#f4ead4"
               strokeWidth="250000"
               strokeMiterlimit="22.9256"
               fill="none"
             >
-              {RECRO_DRAW_SEQUENCE.map((el, i) => {
-                const drawStyle = {
-                  "--dash": 1,
-                  animationDelay: `${drawDelayMs + i * 160}ms`,
-                  animationDuration: "1.3s",
-                } as React.CSSProperties;
-                return el.kind === "path" ? (
+              {RECRO_DRAW_SEQUENCE.map((el, i) =>
+                el.kind === "path" ? (
                   <path
                     key={i}
                     d={el.d}
-                    pathLength={1}
-                    className="animate-draw"
-                    style={drawStyle}
+                    style={{ strokeDasharray: "0 999999" }}
                   />
                 ) : (
                   <polygon
                     key={i}
                     points={el.points}
-                    pathLength={1}
-                    className="animate-draw"
-                    style={drawStyle}
+                    style={{ strokeDasharray: "0 999999" }}
                   />
-                );
-              })}
+                )
+              )}
             </g>
           </svg>
         </div>

@@ -44,7 +44,7 @@ export function CTA() {
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
         <div className="mx-auto max-w-2xl text-center">
           <span className="eyebrow eyebrow-line">
-            <span>/ 04 · Kontakt</span>
+            <span>Kontakt</span>
           </span>
           <h2 className="mt-6 font-serif text-balance text-4xl font-medium tracking-tight text-ivory-gradient sm:text-5xl lg:text-6xl">
             Kontaktirajte{" "}
@@ -59,10 +59,7 @@ export function CTA() {
         <div className="mt-20 grid items-start gap-8 lg:grid-cols-5 lg:gap-12">
           {/* Contact Info */}
           <div className="brackets relative overflow-hidden rounded-2xl border border-[#d49960]/20 glass-panel p-8 lg:col-span-2">
-            <span className="font-mono text-[10px] tracking-[0.3em] text-[#d49960]/60">
-              / DIRECT LINE
-            </span>
-            <h3 className="mt-2 font-serif text-2xl font-medium text-[#e8dcc4]">
+            <h3 className="font-serif text-2xl font-medium text-[#e8dcc4]">
               Kontaktni podatki
             </h3>
 
@@ -111,10 +108,7 @@ export function CTA() {
 
           {/* Form */}
           <div className="brackets relative overflow-hidden rounded-2xl border border-[#d49960]/20 bg-[#0c1d1a]/70 p-8 backdrop-blur-md lg:col-span-3">
-            <span className="font-mono text-[10px] tracking-[0.3em] text-[#d49960]/60">
-              / INQUIRY
-            </span>
-            <h3 className="mt-2 font-serif text-2xl font-medium text-[#e8dcc4]">
+            <h3 className="font-serif text-2xl font-medium text-[#e8dcc4]">
               Pošljite povpraševanje
             </h3>
             <p className="mt-2 text-sm text-[#e8dcc4]/55">

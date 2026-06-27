@@ -249,7 +249,7 @@ export default async function ReferencePage({ params }: { params: Promise<{ slug
               >
                 <ArrowLeft className="mi mi-nudge-left h-3.5 w-3.5" /> Nazaj na reference
               </Link>
-              <span className="mt-8 inline-block eyebrow">/ Projekt</span>
+              <span className="mt-8 inline-block eyebrow">Projekt</span>
               <h1 className="mt-4 font-serif text-3xl font-medium text-ivory-gradient sm:text-4xl lg:text-5xl">
                 {reference.title}
               </h1>
@@ -270,7 +270,7 @@ export default async function ReferencePage({ params }: { params: Promise<{ slug
           <div className="mx-auto max-w-7xl px-6 lg:px-8">
             <div className="grid gap-16 lg:grid-cols-2">
               <div>
-                <span className="eyebrow">/ Kontekst</span>
+                <span className="eyebrow">Kontekst</span>
                 <h2 className="mt-3 font-serif text-3xl font-medium text-ivory-gradient">
                   O projektu
                 </h2>
@@ -286,19 +286,16 @@ export default async function ReferencePage({ params }: { params: Promise<{ slug
                 </div>
               </div>
               <div>
-                <span className="eyebrow">/ Izvedba</span>
+                <span className="eyebrow">Izvedba</span>
                 <h2 className="mt-3 font-serif text-3xl font-medium text-ivory-gradient">
                   Izvedena dela
                 </h2>
                 <ul className="mt-8 space-y-3">
-                  {reference.works.map((work, idx) => (
+                  {reference.works.map((work) => (
                     <li
                       key={work}
                       className="brackets flex items-start gap-4 rounded-lg border border-[#d49960]/15 bg-[#0c1d1a]/60 p-4 transition-colors hover:border-[#d49960]/45"
                     >
-                      <span className="mt-0.5 font-mono text-[10px] tracking-[0.25em] text-[#d49960]/70">
-                        {String(idx + 1).padStart(2, "0")}
-                      </span>
                       <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-[#d49960]" />
                       <span className="text-sm text-[#e8dcc4]/80 leading-relaxed">
                         {work}
@@ -312,7 +309,7 @@ export default async function ReferencePage({ params }: { params: Promise<{ slug
             {/* CTA */}
             <div className="brackets relative mt-20 overflow-hidden rounded-2xl border border-[#d49960]/20 glass-panel p-10 text-center sm:p-14">
               <div className="absolute inset-0 -z-10 tech-grid opacity-25" />
-              <span className="eyebrow">/ Sodelovanje</span>
+              <span className="eyebrow">Sodelovanje</span>
               <h3 className="mt-3 font-serif text-3xl font-medium text-ivory-gradient">
                 Imate podoben projekt?
               </h3>
