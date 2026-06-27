@@ -124,57 +124,20 @@ export function AnimatedRecroLogo({
         />
       )}
 
-      {/* The actual RECRO mark. Hero: static logo with a top-to-bottom
-          clip-path wipe. Intro: the same paths drawn on line by line using a
-          pure-CSS dash animation (.animate-draw) with each path's real,
-          pre-measured length — reliable on every device, survives re-renders. */}
+      {/* The actual RECRO mark — uses the exact static RecroLogoIcon so it is
+          guaranteed to match the real logo. Revealed with a composited
+          clip-path wipe (bulletproof on every device, can't break):
+          intro wipes bottom-to-top, hero wipes top-to-bottom. */}
       {isIntro ? (
         <div
           className="absolute inset-0 flex items-center justify-center"
           style={{
-            // Single small-blur glow — cheap enough to keep smooth while the
-            // strokes animate (the heavy double drop-shadow was the mobile lag).
-            filter: "drop-shadow(0 0 7px rgba(212,153,96,0.55))",
+            filter:
+              "drop-shadow(0 0 12px rgba(212,153,96,0.6)) drop-shadow(0 0 26px rgba(212,153,96,0.3))",
+            animation: `recro-reveal-up 1.9s cubic-bezier(0.22, 1, 0.36, 1) ${drawDelayMs}ms both`,
           }}
         >
-          <svg
-            width={size}
-            height={height}
-            viewBox="0 0 21000000 29700000"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-            style={{ shapeRendering: "geometricPrecision" }}
-          >
-            <g
-              stroke="#f4ead4"
-              strokeWidth="250000"
-              strokeMiterlimit="22.9256"
-              fill="none"
-            >
-              {RECRO_DRAW_SEQUENCE.map((el, i) => {
-                const drawStyle = {
-                  "--dash": el.len,
-                  animationDelay: `${drawDelayMs + i * 150}ms`,
-                  animationDuration: "1.15s",
-                } as React.CSSProperties;
-                return el.kind === "path" ? (
-                  <path
-                    key={i}
-                    d={el.d}
-                    className="animate-draw"
-                    style={drawStyle}
-                  />
-                ) : (
-                  <polygon
-                    key={i}
-                    points={el.points}
-                    className="animate-draw"
-                    style={drawStyle}
-                  />
-                );
-              })}
-            </g>
-          </svg>
+          <RecroLogoIcon size={size} className="text-[#f4ead4]" />
         </div>
       ) : (
         <div
@@ -240,23 +203,3 @@ export function AnimatedRecroLogo({
     </div>
   );
 }
-
-// The logo's strokes in drawing order: top serif, top arch, the four
-// column curves, bottom arch, base serif. Same data as RecroLogoIcon.
-// `len` is each element's pre-measured path length (getTotalLength) so the
-// draw-on uses real dash math — no pathLength (flaky on mobile), no runtime
-// JS measurement (fragile across re-renders). Pure CSS, robust everywhere.
-type DrawElement =
-  | { kind: "path"; d: string; len: number }
-  | { kind: "polygon"; points: string; len: number };
-
-const RECRO_DRAW_SEQUENCE: DrawElement[] = [
-  { kind: "polygon", points: "258950,4649180 20763090,4649180 20763090,399480 258950,399480", len: 49507680 },
-  { kind: "path", d: "M20753330 4630820c0,2846100 -2194350,5153360 -4899740,5153360l-10689970 0c-2705360,0 -4899650,-2307260 -4899650,-5153360", len: 26485716 },
-  { kind: "path", d: "M299130 4652980c2846110,0 5153330,2188820 5153330,4890410l0 10669660c0,2701670 -2307220,4890410 -5153330,4890410", len: 26451596 },
-  { kind: "path", d: "M20782910 25088680c-2846080,0 -5153360,-2188730 -5153360,-4890430l0 -10669590c0,-2701670 2307280,-4890400 5153360,-4890400", len: 26451586 },
-  { kind: "path", d: "M2908200 4645650c2420220,0 4383020,2190540 4383020,4890320l0 10671550c0,2701650 -1962800,4890380 -4383020,4890380", len: 25250816 },
-  { kind: "path", d: "M18116400 4658590c-2420190,0 -4382970,2188740 -4382970,4886710l0 10664030c0,2699840 1962780,4886740 4382970,4886740", len: 25237456 },
-  { kind: "path", d: "M326910 25114600c0,-2846080 2186870,-5153340 4884850,-5153340l10658550 0c2697980,0 4884800,2307260 4884800,5153340", len: 26431578 },
-  { kind: "polygon", points: "318920,29345800 20767540,29345800 20767540,25096100 318920,25096100", len: 49396640 },
-];

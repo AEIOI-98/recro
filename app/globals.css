@@ -175,6 +175,13 @@ body {
   100% { clip-path: inset(0 0 0 0); opacity: 1; }
 }
 
+/* Intro reveal — wipes upward from the base, with a subtle rise. */
+@keyframes recro-reveal-up {
+  0%   { clip-path: inset(100% 0 0 0); opacity: 0; transform: translateY(8px); }
+  20%  { opacity: 1; }
+  100% { clip-path: inset(0 0 0 0); opacity: 1; transform: translateY(0); }
+}
+
 @keyframes recro-node {
   0%, 100% { transform: translate(-50%, -50%) scale(1);   opacity: 0.85; }
   50%      { transform: translate(-50%, -50%) scale(1.3); opacity: 1; }
