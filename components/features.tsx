@@ -16,7 +16,7 @@ const services = [
     title: "Konserviranje-restavriranje",
     slug: "konserviranje-restavriranje",
     description:
-      "Naše delo na področju konserviranja-restavriranja temelji na večletnih izkušnjah. Vsi vodje projektov so strokovno usposobljeni s strokovnim izpitom Ministrstva za kulturo. Delujemo v sodobno opremljeni restavratorski delavnici ali na terenu.",
+      "Naše delo na področju konserviranja-restavriranja temelji na večletnih izkušnjah. Delujemo v sodobno opremljeni restavratorski delavnici ali na terenu.",
     icon: Paintbrush,
     anim: "mi-wiggle",
   },

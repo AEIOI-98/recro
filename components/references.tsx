@@ -240,14 +240,6 @@ export function References() {
                       status={ref.status}
                       className="absolute right-3 top-3 z-20"
                     />
-                    {/* Scan line */}
-                    <div
-                      className="absolute inset-x-0 top-1/2 z-20 h-px opacity-0 transition-opacity duration-500 group-hover:opacity-100"
-                      style={{
-                        background:
-                          "linear-gradient(90deg, transparent, rgba(212,153,96,0.7), transparent)",
-                      }}
-                    />
                   </div>
                   <div className="p-6">
                     <h3 className="line-clamp-2 font-serif text-lg font-medium text-[#e8dcc4] transition-colors group-hover:text-[#f4ead4]">

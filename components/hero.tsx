@@ -47,7 +47,7 @@ const SERVICE_LABELS: Label[] = [
   },
 ];
 
-export function Hero({ revealed = true }: { revealed?: boolean }) {
+export function Hero() {
   return (
     <section className="relative isolate overflow-hidden bg-[#0c1d1a] pt-32 pb-20 sm:pt-40 sm:pb-28">
       {/* Background photograph, deeply tinted */}
@@ -151,34 +151,6 @@ export function Hero({ revealed = true }: { revealed?: boolean }) {
               Oglejte si reference
             </a>
           </div>
-
-          {/* Stats with technical frame */}
-          <div
-            className="mt-16 grid grid-cols-2 gap-px overflow-hidden rounded-xl border border-[#e8dcc4]/10 bg-[#e8dcc4]/5 sm:grid-cols-4 animate-fade-up"
-            style={{ animationDelay: "0.95s" }}
-          >
-            {[
-              { value: 15, suffix: "+", label: "Let izkušenj" },
-              { value: 20, suffix: "+", label: "Projektov" },
-              { value: 10, suffix: "+", label: "Strokovnjakov" },
-              { value: 100, suffix: "%", label: "Predanost" },
-            ].map((stat, i) => (
-              <div
-                key={stat.label}
-                className="flex flex-col items-center justify-center bg-[#0c1d1a]/85 px-5 py-8 text-center backdrop-blur-sm"
-              >
-                <CountUpStat
-                  target={stat.value}
-                  suffix={stat.suffix}
-                  start={revealed}
-                  delay={i * 150}
-                />
-                <p className="mt-2 text-xs uppercase tracking-[0.18em] text-[#e8dcc4]/55">
-                  {stat.label}
-                </p>
-              </div>
-            ))}
-          </div>
         </div>
 
         {/* Right column: visualization */}
@@ -202,61 +174,11 @@ export function Hero({ revealed = true }: { revealed?: boolean }) {
 
       {/* Bottom technical strip */}
       <div className="relative mx-auto mt-20 flex max-w-7xl items-center justify-between px-6 text-[10px] tracking-[0.35em] text-[#e8dcc4]/35 font-mono lg:px-8">
-        <span>RECRO · EST. SLOVENIJA</span>
+        <span>RECRO · EST. SLOVENIA</span>
         <span className="hidden sm:inline">CONSERVATION · 3D · DIAGNOSTICS</span>
         <span>www.recro.si</span>
       </div>
     </section>
-  );
-}
-
-// Counts up from 0 to `target` once `start` is true (i.e. the intro has
-// finished and the hero is on screen). Runs a single eased pass.
-function CountUpStat({
-  target,
-  suffix,
-  start,
-  delay = 0,
-  duration = 1600,
-}: {
-  target: number;
-  suffix: string;
-  start: boolean;
-  delay?: number;
-  duration?: number;
-}) {
-  const [display, setDisplay] = useState(0);
-  const doneRef = useRef(false);
-
-  useEffect(() => {
-    if (!start || doneRef.current) return;
-    doneRef.current = true;
-
-    let raf = 0;
-    let startTime = 0;
-    const timer = setTimeout(() => {
-      const tick = (now: number) => {
-        if (!startTime) startTime = now;
-        const t = Math.min((now - startTime) / duration, 1);
-        const eased = 1 - Math.pow(1 - t, 3); // easeOutCubic
-        setDisplay(Math.round(eased * target));
-        if (t < 1) raf = requestAnimationFrame(tick);
-        else setDisplay(target);
-      };
-      raf = requestAnimationFrame(tick);
-    }, delay);
-
-    return () => {
-      clearTimeout(timer);
-      cancelAnimationFrame(raf);
-    };
-  }, [start, target, delay, duration]);
-
-  return (
-    <p className="font-serif text-3xl font-medium leading-[1.25] text-bronze-gradient sm:text-4xl pl-[0.18em] pb-[0.1em]">
-      {display}
-      {suffix}
-    </p>
   );
 }
 

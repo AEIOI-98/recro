@@ -199,10 +199,7 @@ export function ReferencesMap({ references }: ReferencesMapProps) {
 
         {/* Corner overlay label */}
         <div className="pointer-events-none absolute left-4 top-4 z-[400] rounded-md border border-[#d49960]/30 bg-[#0c1d1a]/85 px-3 py-2 backdrop-blur-md">
-          <p className="font-mono text-[10px] tracking-[0.3em] text-[#d49960]/70">
-            GEO · SI
-          </p>
-          <p className="mt-1 text-xs font-medium tracking-wider text-[#e8dcc4]">
+          <p className="text-xs font-medium tracking-wider text-[#e8dcc4]">
             {references.length} lokacij · {activeCount} v izvajanju
           </p>
         </div>

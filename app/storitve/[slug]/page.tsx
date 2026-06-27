@@ -14,7 +14,7 @@ const services: Record<string, {
     title: "Konserviranje-restavriranje",
     description: "Naše delo na področju konserviranja-restavriranja temelji na večletnih izkušnjah.",
     fullDescription: [
-      "Naše delo na področju konserviranja-restavriranja temelji na večletnih izkušnjah. Vsi vodje projektov so strokovno usposobljeni s strokovnim izpitom Ministrstva za kulturo. Delujemo v sodobno opremljeni restavratorski delavnici ali na terenu.",
+      "Naše delo na področju konserviranja-restavriranja temelji na večletnih izkušnjah. Delujemo v sodobno opremljeni restavratorski delavnici ali na terenu.",
       "Dejavnosti konserviranja-restavriranja izvajamo na področjih: stensko slikarstvo, štukatura, kamnita plastika, lesena polikromirana plastika, okrasna oprema, slike na platnu in lesu.",
       "Pri našem delu upoštevamo najvišje standarde stroke in sodobne mednarodne smernice za varovanje kulturne dediščine."
     ],
@@ -147,8 +147,7 @@ export default async function ServicePage({ params }: { params: Promise<{ slug: 
             >
               <ArrowLeft className="mi mi-nudge-left h-3.5 w-3.5" /> Nazaj na storitve
             </Link>
-            <span className="mt-10 inline-block eyebrow">Storitev</span>
-            <h1 className="mt-4 font-serif text-4xl font-medium tracking-tight text-ivory-gradient sm:text-5xl lg:text-6xl">
+            <h1 className="mt-10 font-serif text-4xl font-medium tracking-tight text-ivory-gradient sm:text-5xl lg:text-6xl">
               {service.title}
             </h1>
             <p className="mt-6 max-w-2xl text-lg leading-relaxed text-[#e8dcc4]/65">
@@ -162,8 +161,7 @@ export default async function ServicePage({ params }: { params: Promise<{ slug: 
           <div className="mx-auto max-w-7xl px-6 lg:px-8">
             <div className="grid gap-16 lg:grid-cols-2">
               <div>
-                <span className="eyebrow">Pregled</span>
-                <h2 className="mt-3 font-serif text-3xl font-medium text-ivory-gradient">
+                <h2 className="font-serif text-3xl font-medium text-ivory-gradient">
                   O storitvi
                 </h2>
                 <div className="mt-8 space-y-5">
@@ -178,8 +176,7 @@ export default async function ServicePage({ params }: { params: Promise<{ slug: 
                 </div>
               </div>
               <div>
-                <span className="eyebrow">Obseg</span>
-                <h2 className="mt-3 font-serif text-3xl font-medium text-ivory-gradient">
+                <h2 className="font-serif text-3xl font-medium text-ivory-gradient">
                   Kaj ponujamo
                 </h2>
                 <ul className="mt-8 space-y-3">
