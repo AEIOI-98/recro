@@ -249,8 +249,7 @@ export default async function ReferencePage({ params }: { params: Promise<{ slug
               >
                 <ArrowLeft className="mi mi-nudge-left h-3.5 w-3.5" /> Nazaj na reference
               </Link>
-              <span className="mt-8 inline-block eyebrow">Projekt</span>
-              <h1 className="mt-4 font-serif text-3xl font-medium text-ivory-gradient sm:text-4xl lg:text-5xl">
+              <h1 className="mt-8 font-serif text-3xl font-medium text-ivory-gradient sm:text-4xl lg:text-5xl">
                 {reference.title}
               </h1>
               <p className="mt-3 max-w-3xl text-[#e8dcc4]/75 leading-relaxed">
@@ -270,8 +269,7 @@ export default async function ReferencePage({ params }: { params: Promise<{ slug
           <div className="mx-auto max-w-7xl px-6 lg:px-8">
             <div className="grid gap-16 lg:grid-cols-2">
               <div>
-                <span className="eyebrow">Kontekst</span>
-                <h2 className="mt-3 font-serif text-3xl font-medium text-ivory-gradient">
+                <h2 className="font-serif text-3xl font-medium text-ivory-gradient">
                   O projektu
                 </h2>
                 <div className="mt-8 space-y-5">
@@ -286,8 +284,7 @@ export default async function ReferencePage({ params }: { params: Promise<{ slug
                 </div>
               </div>
               <div>
-                <span className="eyebrow">Izvedba</span>
-                <h2 className="mt-3 font-serif text-3xl font-medium text-ivory-gradient">
+                <h2 className="font-serif text-3xl font-medium text-ivory-gradient">
                   Izvedena dela
                 </h2>
                 <ul className="mt-8 space-y-3">
