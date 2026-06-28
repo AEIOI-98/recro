@@ -287,13 +287,10 @@ export default async function ReferencePage({ params }: { params: Promise<{ slug
                 <h2 className="font-serif text-3xl font-medium text-ivory-gradient">
                   Izvedena dela
                 </h2>
-                <ul className="mt-8 space-y-3">
+                <ul className="mt-8 space-y-4">
                   {reference.works.map((work) => (
-                    <li
-                      key={work}
-                      className="brackets flex items-start gap-4 rounded-lg border border-[#d49960]/15 bg-[#0c1d1a]/60 p-4 transition-colors hover:border-[#d49960]/45"
-                    >
-                      <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-[#d49960]" />
+                    <li key={work} className="flex items-start gap-3">
+                      <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-[#d49960]" />
                       <span className="text-sm text-[#e8dcc4]/80 leading-relaxed">
                         {work}
                       </span>
