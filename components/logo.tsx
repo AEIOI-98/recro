@@ -138,14 +138,17 @@ export function AnimatedRecroLogo({
       )}
 
       {/* The actual RECRO mark. Intro: the real logo paths drawn on with a
-          pure-CSS dash animation. A uniform oversized dash (RECRO_DASH) means
-          every stroke ends fully solid → finished mark is identical to the
-          logo, with zero chance of leftover gaps. Hero: clip-path wipe. */}
+          pure-CSS dash animation, normalized with pathLength so it ends fully
+          solid. The glow filter is applied ONLY after the draw finishes
+          (withScan flips true): re-blurring the SVG every frame while the
+          strokes paint is what made it lag on mobile/tablet. Hero: clip wipe. */}
       {isIntro ? (
         <div
           className="absolute inset-0 flex items-center justify-center"
           style={{
-            filter: "drop-shadow(0 0 9px rgba(212,153,96,0.55))",
+            filter: withScan
+              ? "drop-shadow(0 0 9px rgba(212,153,96,0.55))"
+              : "none",
           }}
         >
           <svg
