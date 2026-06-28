@@ -1,5 +1,12 @@
 "use client";
 
+import { useEffect, useLayoutEffect, useRef } from "react";
+
+// useLayoutEffect on the client (runs before paint → no flash of the
+// undrawn logo), useEffect on the server (avoids the SSR warning).
+const useIsoLayoutEffect =
+  typeof window !== "undefined" ? useLayoutEffect : useEffect;
+
 export function RecroLogoIcon({
   className = "",
   size = 40,
@@ -78,6 +85,47 @@ export function AnimatedRecroLogo({
 }) {
   const height = size * 1.41;
   const isIntro = variant === "intro";
+  const drawRef = useRef<HTMLDivElement>(null);
+
+  // Intro line-draw: animate stroke-dashoffset on the real RecroLogoIcon's
+  // paths. Lengths are measured at runtime (getTotalLength — supported
+  // everywhere). The styles are applied imperatively to elements that have NO
+  // React-managed `style` prop, so re-renders (e.g. the scan toggle) cannot
+  // clobber them — this is what kept breaking the earlier versions.
+  useIsoLayoutEffect(() => {
+    if (!isIntro) return;
+    const root = drawRef.current;
+    if (!root) return;
+    const els = Array.from(
+      root.querySelectorAll<SVGGeometryElement>("path, polygon")
+    );
+    const lengths: number[] = [];
+    // Hide every stroke (dash = offset = full length) before the first paint.
+    els.forEach((el) => {
+      let len = 0;
+      try {
+        len = el.getTotalLength();
+      } catch {
+        len = 0;
+      }
+      lengths.push(len);
+      if (!len) return;
+      el.style.transition = "none";
+      el.style.strokeDasharray = `${len}`;
+      el.style.strokeDashoffset = `${len}`;
+    });
+    // Next frame: draw each line in sequence by easing the offset to 0.
+    const raf = requestAnimationFrame(() => {
+      els.forEach((el, i) => {
+        if (!lengths[i]) return;
+        el.style.transition = `stroke-dashoffset 1.1s cubic-bezier(0.22, 1, 0.36, 1) ${
+          drawDelayMs + i * 150
+        }ms`;
+        el.style.strokeDashoffset = "0";
+      });
+    });
+    return () => cancelAnimationFrame(raf);
+  }, [isIntro, drawDelayMs]);
   // The logo viewBox is 21M × 29.7M, but the static RecroLogoIcon sizes its
   // rendered box to size × size*1.41. So the SVG drawable area exactly fills
   // the wrapper. Below corner positions are expressed as % of that wrapper.
@@ -125,16 +173,15 @@ export function AnimatedRecroLogo({
       )}
 
       {/* The actual RECRO mark — uses the exact static RecroLogoIcon so it is
-          guaranteed to match the real logo. Revealed with a composited
-          clip-path wipe (bulletproof on every device, can't break):
-          intro wipes bottom-to-top, hero wipes top-to-bottom. */}
+          guaranteed to match the real logo. Intro: line-draw via
+          stroke-dashoffset on those paths (see useIsoLayoutEffect above).
+          Hero: composited clip-path wipe. */}
       {isIntro ? (
         <div
+          ref={drawRef}
           className="absolute inset-0 flex items-center justify-center"
           style={{
-            filter:
-              "drop-shadow(0 0 12px rgba(212,153,96,0.6)) drop-shadow(0 0 26px rgba(212,153,96,0.3))",
-            animation: `recro-reveal-up 1.9s cubic-bezier(0.22, 1, 0.36, 1) ${drawDelayMs}ms both`,
+            filter: "drop-shadow(0 0 8px rgba(212,153,96,0.55))",
           }}
         >
           <RecroLogoIcon size={size} className="text-[#f4ead4]" />
