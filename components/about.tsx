@@ -41,28 +41,26 @@ export function About() {
       id="o-nas"
       className="relative overflow-hidden pt-28 sm:pt-36 pb-16 sm:pb-20"
     >
-      {/* Background photograph — conservation close-up, deeply tinted so the
-          emerald theme and text stay readable */}
+      {/* Background photograph — conservation close-up. Clearly visible, with
+          a lighter overlay that darkens toward the top/bottom for text
+          contrast and section blending. */}
       <div className="absolute inset-0 -z-10">
         <Image
-          src={asset("/images/about-bg.jpg")}
+          src={asset("/images/onas-photo.jpg")}
           alt=""
           fill
-          className="object-cover opacity-[0.28]"
+          className="object-cover opacity-90"
+          style={{
+            filter: "brightness(1.15) saturate(1.08)",
+            imageOrientation: "none",
+          }}
           sizes="100vw"
         />
         <div
           className="absolute inset-0"
           style={{
             background:
-              "linear-gradient(180deg, #0c1d1a 0%, rgba(12,29,26,0.82) 35%, rgba(12,29,26,0.82) 65%, #0c1d1a 100%)",
-          }}
-        />
-        <div
-          className="absolute inset-0"
-          style={{
-            background:
-              "radial-gradient(ellipse 60% 50% at 50% 50%, transparent, rgba(12,29,26,0.6))",
+              "linear-gradient(180deg, rgba(12,29,26,0.78) 0%, rgba(12,29,26,0.32) 28%, rgba(12,29,26,0.34) 70%, #0c1d1a 100%)",
           }}
         />
       </div>
