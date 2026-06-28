@@ -1,6 +1,8 @@
 "use client";
 
+import Image from "next/image";
 import { Building2, Search, GraduationCap, Users } from "lucide-react";
+import { asset } from "@/lib/site";
 
 const goals = [
   {
@@ -39,8 +41,33 @@ export function About() {
       id="o-nas"
       className="relative overflow-hidden pt-28 sm:pt-36 pb-16 sm:pb-20"
     >
+      {/* Background photograph — conservation close-up, deeply tinted so the
+          emerald theme and text stay readable */}
+      <div className="absolute inset-0 -z-10">
+        <Image
+          src={asset("/images/about-bg.jpg")}
+          alt=""
+          fill
+          className="object-cover opacity-[0.28]"
+          sizes="100vw"
+        />
+        <div
+          className="absolute inset-0"
+          style={{
+            background:
+              "linear-gradient(180deg, #0c1d1a 0%, rgba(12,29,26,0.82) 35%, rgba(12,29,26,0.82) 65%, #0c1d1a 100%)",
+          }}
+        />
+        <div
+          className="absolute inset-0"
+          style={{
+            background:
+              "radial-gradient(ellipse 60% 50% at 50% 50%, transparent, rgba(12,29,26,0.6))",
+          }}
+        />
+      </div>
       {/* Background atmospherics */}
-      <div className="absolute inset-0 -z-10 tech-dots opacity-50" />
+      <div className="absolute inset-0 -z-10 tech-dots opacity-30" />
       <div
         className="absolute inset-x-0 top-0 h-px"
         style={{
@@ -83,11 +110,11 @@ export function About() {
             <span className="h-px w-12 bronze-divider" />
           </div>
 
-          <div className="grid gap-px overflow-hidden rounded-2xl border border-[#d49960]/15 bg-[#d49960]/10 sm:grid-cols-2 lg:grid-cols-4">
+          <div className="grid gap-px overflow-hidden rounded-2xl border border-[#d49960]/15 bg-[#d49960]/10 backdrop-blur-sm sm:grid-cols-2 lg:grid-cols-4">
             {goals.map((goal) => (
               <article
                 key={goal.title}
-                className="brackets icon-fx group relative bg-[#0c1d1a] p-7 transition-all duration-500 hover:bg-[#132823]"
+                className="brackets icon-fx group relative bg-[#0c1d1a]/70 p-7 transition-all duration-500 hover:bg-[#132823]/85"
               >
                 <div className="flex h-12 w-12 items-center justify-center rounded-lg border border-[#d49960]/30 bg-[#d49960]/10 text-[#d49960] transition-all duration-500 group-hover:border-[#d49960]/70 group-hover:bg-[#d49960]/20">
                   <goal.icon className={`mi ${goal.anim} h-5 w-5`} />
