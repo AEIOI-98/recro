@@ -1,11 +1,17 @@
 "use client";
 
-import { useEffect, useLayoutEffect, useRef } from "react";
-
-// useLayoutEffect on the client (runs before paint → no flash of the
-// undrawn logo), useEffect on the server (avoids the SSR warning).
-const useIsoLayoutEffect =
-  typeof window !== "undefined" ? useLayoutEffect : useEffect;
+// Path data for the RECRO mark, in drawing order. Identical geometry to
+// RecroLogoIcon so the finished line-draw is pixel-identical to the logo.
+const RECRO_DRAW: Array<{ d?: string; points?: string }> = [
+  { points: "258950,4649180 20763090,4649180 20763090,399480 258950,399480" },
+  { d: "M20753330 4630820c0,2846100 -2194350,5153360 -4899740,5153360l-10689970 0c-2705360,0 -4899650,-2307260 -4899650,-5153360" },
+  { d: "M299130 4652980c2846110,0 5153330,2188820 5153330,4890410l0 10669660c0,2701670 -2307220,4890410 -5153330,4890410" },
+  { d: "M20782910 25088680c-2846080,0 -5153360,-2188730 -5153360,-4890430l0 -10669590c0,-2701670 2307280,-4890400 5153360,-4890400" },
+  { d: "M2908200 4645650c2420220,0 4383020,2190540 4383020,4890320l0 10671550c0,2701650 -1962800,4890380 -4383020,4890380" },
+  { d: "M18116400 4658590c-2420190,0 -4382970,2188740 -4382970,4886710l0 10664030c0,2699840 1962780,4886740 4382970,4886740" },
+  { d: "M326910 25114600c0,-2846080 2186870,-5153340 4884850,-5153340l10658550 0c2697980,0 4884800,2307260 4884800,5153340" },
+  { points: "318920,29345800 20767540,29345800 20767540,25096100 318920,25096100" },
+];
 
 export function RecroLogoIcon({
   className = "",
@@ -85,47 +91,6 @@ export function AnimatedRecroLogo({
 }) {
   const height = size * 1.41;
   const isIntro = variant === "intro";
-  const drawRef = useRef<HTMLDivElement>(null);
-
-  // Intro line-draw: animate stroke-dashoffset on the real RecroLogoIcon's
-  // paths. Lengths are measured at runtime (getTotalLength — supported
-  // everywhere). The styles are applied imperatively to elements that have NO
-  // React-managed `style` prop, so re-renders (e.g. the scan toggle) cannot
-  // clobber them — this is what kept breaking the earlier versions.
-  useIsoLayoutEffect(() => {
-    if (!isIntro) return;
-    const root = drawRef.current;
-    if (!root) return;
-    const els = Array.from(
-      root.querySelectorAll<SVGGeometryElement>("path, polygon")
-    );
-    const lengths: number[] = [];
-    // Hide every stroke (dash = offset = full length) before the first paint.
-    els.forEach((el) => {
-      let len = 0;
-      try {
-        len = el.getTotalLength();
-      } catch {
-        len = 0;
-      }
-      lengths.push(len);
-      if (!len) return;
-      el.style.transition = "none";
-      el.style.strokeDasharray = `${len}`;
-      el.style.strokeDashoffset = `${len}`;
-    });
-    // Next frame: draw each line in sequence by easing the offset to 0.
-    const raf = requestAnimationFrame(() => {
-      els.forEach((el, i) => {
-        if (!lengths[i]) return;
-        el.style.transition = `stroke-dashoffset 1.1s cubic-bezier(0.22, 1, 0.36, 1) ${
-          drawDelayMs + i * 150
-        }ms`;
-        el.style.strokeDashoffset = "0";
-      });
-    });
-    return () => cancelAnimationFrame(raf);
-  }, [isIntro, drawDelayMs]);
   // The logo viewBox is 21M × 29.7M, but the static RecroLogoIcon sizes its
   // rendered box to size × size*1.41. So the SVG drawable area exactly fills
   // the wrapper. Below corner positions are expressed as % of that wrapper.
@@ -172,19 +137,61 @@ export function AnimatedRecroLogo({
         />
       )}
 
-      {/* The actual RECRO mark — uses the exact static RecroLogoIcon so it is
-          guaranteed to match the real logo. Intro: line-draw via
-          stroke-dashoffset on those paths (see useIsoLayoutEffect above).
-          Hero: composited clip-path wipe. */}
+      {/* The actual RECRO mark. Intro: the real logo paths drawn on with a
+          pure-CSS dash animation. A uniform oversized dash (RECRO_DASH) means
+          every stroke ends fully solid → finished mark is identical to the
+          logo, with zero chance of leftover gaps. Hero: clip-path wipe. */}
       {isIntro ? (
         <div
-          ref={drawRef}
           className="absolute inset-0 flex items-center justify-center"
           style={{
-            filter: "drop-shadow(0 0 8px rgba(212,153,96,0.55))",
+            filter: "drop-shadow(0 0 9px rgba(212,153,96,0.55))",
           }}
         >
-          <RecroLogoIcon size={size} className="text-[#f4ead4]" />
+          <svg
+            width={size}
+            height={height}
+            viewBox="0 0 21000000 29700000"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+            style={{ shapeRendering: "geometricPrecision" }}
+          >
+            <g
+              stroke="#f4ead4"
+              strokeWidth="250000"
+              strokeMiterlimit="22.9256"
+              fill="none"
+            >
+              {RECRO_DRAW.map((el, i) => {
+                // pathLength={1} normalizes the dash math to a 0–1 range, so
+                // the dash works despite the SVG's millions-scale coordinates
+                // (raw dasharray is unreliable at that scale). At offset 0 the
+                // length-1 dash covers the whole path → fully solid.
+                const drawStyle = {
+                  "--dash": 1,
+                  animationDelay: `${drawDelayMs + i * 150}ms`,
+                  animationDuration: "1.2s",
+                } as React.CSSProperties;
+                return el.d ? (
+                  <path
+                    key={i}
+                    d={el.d}
+                    pathLength={1}
+                    className="animate-draw"
+                    style={drawStyle}
+                  />
+                ) : (
+                  <polygon
+                    key={i}
+                    points={el.points}
+                    pathLength={1}
+                    className="animate-draw"
+                    style={drawStyle}
+                  />
+                );
+              })}
+            </g>
+          </svg>
         </div>
       ) : (
         <div
